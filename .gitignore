@@ -2,22 +2,19 @@
 bin
 gen
 
-#Eclipse
-.project
-.classpath
-.settings
-
 #IntelliJ IDEA
 .idea
 *.iml
 classes
 
-#Maven
-target
-release.properties
-pom.xml.*
+#Gradle
+.gradle
+build/
 
 #Command line
 local.properties
 build.xml
 proguard-project.txt
+
+#OSX
+.DS_Store
