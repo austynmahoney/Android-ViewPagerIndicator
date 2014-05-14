@@ -58,6 +58,15 @@ There are three ways to style the look of the indicators.
 Each indicator has a demo which creates the same look using each of these
 methods.
 
+Building This Library
+-------------------------
+Run the `assembleRelease` Gradle task in the root directory.
+
+```Gradle
+/.gradlew assembleRelease
+```
+
+The `library.aar` artifact will be built in `/library/build/libs/`.
 
 Including In Your Project
 -------------------------
@@ -66,23 +75,22 @@ Android-ViewPagerIndicator is presented as an [Android library project][7]. A
 standalone JAR is not possible due to the theming capabilities offered by the
 indicator widgets.
 
-You can include this project by [referencing it as a library project][8] in
-Eclipse or ant.
+You can include this project by [referencing the as a library project][8] or adding it as an .aar (Android ARchive) in
+Android Studio.
 
-If you are a Maven user you can easily include the library by specifying it as
-a dependency:
+#####Including as an `.aar`
+ Build the project and move `library.aar` into your projects `/libs` folder. Rename `library.aar` to `viewpagerindicator-2.5.0.aar`.
 
-    <dependency>
-      <groupId>com.viewpagerindicator</groupId>
-      <artifactId>library</artifactId>
-      <version>2.4.1</version>
-      <type>apklib</type>
-    </dependency>
+Add the aar as a dependency in your application's `build.gradle`:
+```Groovy
+dependencies {
+    compile files('libs/viewpagerindicator-2.5.0.aar')
+}
+```
 
 This project depends on the `ViewPager` class which is available in the
 [Android Support Library][2] or [ActionBarSherlock][3]. Details for
-including one of those libraries is available on their respecitve web sites.
-
+including one of those libraries is available on their respective web sites.
 
 
 
@@ -95,6 +103,7 @@ Developed By
 Credits
 -------
 
+ * [Austyn Mahoney][11] - Converted project to Gradle build system.
  * [Patrik Åkerfeldt][1] - Author of [ViewFlow][4], a precursor to the ViewPager,
    which supports paged views and is the original source of both the title
    and circle indicators.
@@ -107,6 +116,7 @@ Credits
 License
 =======
 
+    Copyright 2014 Austyn Mahoney
     Copyright 2012 Jake Wharton
     Copyright 2011 Patrik Åkerfeldt
     Copyright 2011 Francisco Figueiredo Jr.
@@ -134,7 +144,9 @@ License
  [4]: https://github.com/pakerfeldt/android-viewflow
  [5]: https://github.com/franciscojunior
  [6]: https://gist.github.com/1122947
- [7]: http://developer.android.com/guide/developing/projects/projects-eclipse.html
- [8]: http://developer.android.com/guide/developing/projects/projects-eclipse.html#ReferencingLibraryProject
- [9]: https://raw.github.com/JakeWharton/Android-ViewPagerIndicator/master/sample/screens.png
+ [7]: http://developer.android.com/tools/projects/index.html#LibraryProjects
+ [8]: http://developer.android.com/sdk/installing/studio-build.html#addLibModule
+ [9]: https://raw.github.com/austynmahoney/Android-ViewPagerIndicator/master/sample/screens.png
  [10]: https://play.google.com/store/apps/details?id=com.viewpagerindicator.sample
+ [11]: https://github.com/austynmahoney
+ 
