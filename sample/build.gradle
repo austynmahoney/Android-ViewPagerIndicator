@@ -1,4 +1,4 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -10,7 +10,6 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
     }
-
     sourceSets {
         main {
             manifest {
@@ -32,17 +31,7 @@ android {
     }
 }
 
-android.libraryVariants.all { variant ->
-    def name = variant.buildType.name
-    if (!name.equals("debug")) {
-        def task = project.tasks.create "jar${name.capitalize()}", Jar
-        task.dependsOn variant.javaCompile
-        task.from variant.javaCompile.destinationDir
-        artifacts.add('archives', task);
-    }
-}
-
 dependencies {
-    //noinspection GradleDynamicVersion
-    provided 'com.android.support:support-v4:+'
+    compile project(':library')
+    compile 'com.android.support:support-v4:23.1.0'
 }
