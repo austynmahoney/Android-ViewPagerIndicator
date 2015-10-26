@@ -4,13 +4,9 @@ Android ViewPagerIndicator
 Paging indicator widgets that are compatible with the `ViewPager` from the
 [Android Support Library][2] to improve discoverability of content.
 
-Try out the sample application [on the Android Market][10].
+Jake has stopped development on this project, so the format was outdated and you could not include it in your project easily. This fork takes care of that using contributions from myself and others. See the *Including In Your Project* section on how to accomplish that, because this version is not in Maven Central or Jcenter.
 
 ![ViewPagerIndicator Sample Screenshots][9]
-
-These widgets can also be used in conjunction with [ActionBarSherlock][3]!
-
-
 
 Usage
 =====
@@ -61,36 +57,33 @@ methods.
 
 Including In Your Project
 -------------------------
+The easiest way to include this fork in your project is by using [JitPack.io](https://jitpack.io/). JitPack builds GitHub projects on demand and publishes ready-to-use packages. Use the latest release (e.g. `v2.5.0`) as the version name.
 
-Android-ViewPagerIndicator is presented as an [Android library project][7]. A
-standalone JAR is not possible due to the theming capabilities offered by the
-indicator widgets.
+Add the Jitpack repo in your `build.gradle` at the end of repositories
+```groovy
+ repositories {
+        // ...
+        maven { url "https://jitpack.io" }
+  }
+```
+Add the dependency
+```
+	dependencies {
+	        compile 'com.github.austynmahoney:Android-ViewPagerIndicator:v{LATEST_RELEASE}@aar'
+	}
+```
 
-You can include this project by [referencing it as a library project][8] in
-Eclipse or ant.
+Don't forget the `@aar`, or you will accidentally include a `.jar` without the proper Android resources.
 
-If you are a Maven user you can easily include the library by specifying it as
-a dependency:
+Maintained By
+============
 
-    <dependency>
-      <groupId>com.viewpagerindicator</groupId>
-      <artifactId>library</artifactId>
-      <version>2.4.1</version>
-      <type>apklib</type>
-    </dependency>
+ * Austyn Mahoney - `<austynmahoney[AT]gmail.com>`
 
-This project depends on the `ViewPager` class which is available in the
-[Android Support Library][2] or [ActionBarSherlock][3]. Details for
-including one of those libraries is available on their respecitve web sites.
-
-
-
-
-Developed By
+Initially Developed By
 ============
 
  * Jake Wharton - <jakewharton@gmail.com>
-
 
 Credits
 -------
@@ -103,10 +96,10 @@ Credits
 
 
 
-
 License
 =======
 
+    Copyright 2015 Austyn Mahoney
     Copyright 2012 Jake Wharton
     Copyright 2011 Patrik Åkerfeldt
     Copyright 2011 Francisco Figueiredo Jr.
