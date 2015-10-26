@@ -104,7 +104,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
         Drawable background = a.getDrawable(R.styleable.CirclePageIndicator_android_background);
         if (background != null) {
-          setBackgroundDrawable(background);
+            setBackgroundDrawable(background);
         }
 
         a.recycle();
@@ -228,10 +228,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         final float threeRadius = mRadius * 3;
-        final float shortOffset = shortPaddingBefore + mRadius;
-        float longOffset = longPaddingBefore + mRadius;
+        final float shortOffset = shortPaddingBefore + mRadius + mPaintStroke.getStrokeWidth() / 2;
+        float longOffset = longPaddingBefore + mRadius + mPaintStroke.getStrokeWidth() / 2;
         if (mCentered) {
-            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+            longOffset += ((longSize - longPaddingBefore - longPaddingAfter) - (count * threeRadius - mRadius)
+            ) / 2.0f;
         }
 
         float dX;
@@ -278,7 +279,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
     }
 
-    public boolean onTouchEvent(android.view.MotionEvent ev) {
+    public boolean onTouchEvent(MotionEvent ev) {
         if (super.onTouchEvent(ev)) {
             return true;
         }
@@ -453,8 +454,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     /**
      * Determines the width of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The width of the view, honoring constraints from measureSpec
      */
     private int measureLong(int measureSpec) {
@@ -468,8 +468,9 @@ public class CirclePageIndicator extends View implements PageIndicator {
         } else {
             //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount();
-            result = (int)(getPaddingLeft() + getPaddingRight()
-                    + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
+            result = (int) (getPaddingLeft() + getPaddingRight()
+                    + (count * (2 * mRadius + 1)) + (count - 1) * (mRadius)
+                    + mPaintStroke.getStrokeWidth()); // The first circle half stroke + the last one half stroke
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -481,8 +482,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
     /**
      * Determines the height of this view
      *
-     * @param measureSpec
-     *            A measureSpec packed into an int
+     * @param measureSpec A measureSpec packed into an int
      * @return The height of the view, honoring constraints from measureSpec
      */
     private int measureShort(int measureSpec) {
@@ -495,7 +495,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
             result = specSize;
         } else {
             //Measure the height
-            result = (int)(2 * mRadius + getPaddingTop() + getPaddingBottom() + 1);
+            result = (int) (2 * mRadius + getPaddingTop() + getPaddingBottom() + 1
+                    + mPaintStroke.getStrokeWidth()); // The first circle half stroke + the last one half stroke
             //Respect AT_MOST value if that was what is called for by measureSpec
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
@@ -506,7 +507,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState)state;
+        SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mCurrentPage = savedState.currentPage;
         mSnapPage = savedState.currentPage;
@@ -540,7 +541,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         @SuppressWarnings("UnusedDeclaration")
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
